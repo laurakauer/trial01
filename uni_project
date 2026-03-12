@@ -1,0 +1,771 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/laurakauer/trial01/blob/main/uni_project\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import csv\n",
+        "\n",
+        "with open(\"steam_games.csv\", \"r\", encoding=\"utf-8\") as arquivo:\n",
+        "    leitor = csv.DictReader(arquivo)\n",
+        "\n",
+        "    for i, linha in enumerate(leitor):\n",
+        "        print(\"Jogo\", i + 1)\n",
+        "        print(\"AppID:\", linha[\"AppID\"])\n",
+        "        print(\"Name:\", linha[\"Name\"])\n",
+        "        print(\"Release date:\", linha[\"Release date\"])\n",
+        "        print(\"Price:\", linha[\"Price\"])\n",
+        "        print(\"-\" * 40)\n",
+        "\n",
+        "        if i == 4:\n",
+        "            break"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "BQCYbhJOMEeW",
+        "outputId": "52229080-8160-4bbc-f6d5-b08997904830"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Jogo 1\n",
+            "AppID: 20200\n",
+            "Name: Galactic Bowling\n",
+            "Release date: Oct 21, 2008\n",
+            "Price: 19.99\n",
+            "----------------------------------------\n",
+            "Jogo 2\n",
+            "AppID: 655370\n",
+            "Name: Train Bandit\n",
+            "Release date: Oct 12, 2017\n",
+            "Price: 0.99\n",
+            "----------------------------------------\n",
+            "Jogo 3\n",
+            "AppID: 1732930\n",
+            "Name: Jolt Project\n",
+            "Release date: Nov 17, 2021\n",
+            "Price: 4.99\n",
+            "----------------------------------------\n",
+            "Jogo 4\n",
+            "AppID: 1355720\n",
+            "Name: Henosis™\n",
+            "Release date: Jul 23, 2020\n",
+            "Price: 5.99\n",
+            "----------------------------------------\n",
+            "Jogo 5\n",
+            "AppID: 1139950\n",
+            "Name: Two Weeks in Painland\n",
+            "Release date: Feb 3, 2020\n",
+            "Price: 0.0\n",
+            "----------------------------------------\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class Game:\n",
+        "    def __init__(self, app_id, name, release_date, price):\n",
+        "        self.app_id = app_id\n",
+        "        self.name = name\n",
+        "        self.release_date = release_date\n",
+        "        self.price = price\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return f\"{self.name} - {self.release_date} - {self.price}\""
+      ],
+      "metadata": {
+        "id": "wM-JXnt1NQvB"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "jogo_teste = Game(\"20200\", \"Galactic Bowling\", \"Oct 21, 2008\", 19.99)\n",
+        "\n",
+        "print(jogo_teste.app_id)\n",
+        "print(jogo_teste.name)\n",
+        "print(jogo_teste.release_date)\n",
+        "print(jogo_teste.price)"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "hcEw5XCrNbN4",
+        "outputId": "4938ef6d-b031-4248-a338-753b0410f6ff"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "20200\n",
+            "Galactic Bowling\n",
+            "Oct 21, 2008\n",
+            "19.99\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import csv\n",
+        "\n",
+        "def carregar_jogos(nome_arquivo):\n",
+        "    jogos = []\n",
+        "\n",
+        "    with open(nome_arquivo, \"r\", encoding=\"utf-8\") as arquivo:\n",
+        "    #abre o arquivo em modo de leitura\n",
+        "      leitor = csv.DictReader(arquivo)\n",
+        "\n",
+        "      for linha in leitor:\n",
+        "            app_id = linha[\"AppID\"]\n",
+        "            name = linha[\"Name\"]\n",
+        "            release_date = linha[\"Release date\"]\n",
+        "            price = float(linha[\"Price\"])\n",
+        "\n",
+        "            jogo = Game(app_id, name, release_date, price)\n",
+        "            jogos.append(jogo)\n",
+        "    return jogos"
+      ],
+      "metadata": {
+        "id": "MPqiBby8PR2T"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "jogos = carregar_jogos(\"steam_games.csv\")\n",
+        "\n",
+        "print(\"Quantidade de jogos carregados:\", len(jogos))\n",
+        "print(jogos[0])\n",
+        "print(jogos[1])\n",
+        "print(jogos[2])"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "T_8_t4C4QGUg",
+        "outputId": "b5be5670-a945-4060-a0e8-638505fb2d64"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Quantidade de jogos carregados: 72934\n",
+            "Galactic Bowling - Oct 21, 2008 - 19.99\n",
+            "Train Bandit - Oct 12, 2017 - 0.99\n",
+            "Jolt Project - Nov 17, 2021 - 4.99\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#PERGUNTA 1 - PERCENTUAL DE JOGOS PAGOS E GRATUITOS\n",
+        "\n",
+        "def calcular_percentual_gratuitos_pagos(jogos):\n",
+        "    total_jogos = len(jogos)\n",
+        "    gratuitos = 0\n",
+        "    pagos = 0\n",
+        "\n",
+        "    for jogo in jogos:\n",
+        "        if jogo.price == 0:\n",
+        "            gratuitos += 1\n",
+        "        else:\n",
+        "            pagos += 1\n",
+        "\n",
+        "    percentual_gratuitos = (gratuitos / total_jogos) * 100\n",
+        "    percentual_pagos = (pagos / total_jogos) * 100\n",
+        "\n",
+        "    return percentual_gratuitos, percentual_pagos\n",
+        "\n",
+        "\n",
+        "percentual_gratuitos, percentual_pagos = calcular_percentual_gratuitos_pagos(jogos)\n",
+        "\n",
+        "print(\"Percentual de jogos gratuitos:\", round(percentual_gratuitos, 2), \"%\")\n",
+        "print(\"Percentual de jogos pagos:\", round(percentual_pagos, 2), \"%\")"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "eQZ_q9mWbcAt",
+        "outputId": "0c99c470-ef72-48c7-8e16-f53bb65aeb8e"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Percentual de jogos gratuitos: 17.39 %\n",
+            "Percentual de jogos pagos: 82.61 %\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def extrair_ano(data):\n",
+        "    partes = data.split(\",\")\n",
+        "\n",
+        "    if len(partes) < 2:\n",
+        "        return None\n",
+        "\n",
+        "    ano_texto = partes[-1].strip()\n",
+        "\n",
+        "    if ano_texto.isdigit():\n",
+        "        return int(ano_texto)\n",
+        "\n",
+        "    return None"
+      ],
+      "metadata": {
+        "id": "RLA7rxOiepYs"
+      },
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#PERGUNTA 2 - ANO COM MAIS JOGOS LANÇADOS\n",
+        "\n",
+        "def ano_com_mais_lancamentos(jogos):\n",
+        "    contagem_anos = {}\n",
+        "\n",
+        "    for jogo in jogos:\n",
+        "        ano = extrair_ano(jogo.release_date)\n",
+        "\n",
+        "        if ano is not None:\n",
+        "            if ano in contagem_anos:\n",
+        "                contagem_anos[ano] += 1\n",
+        "            else:\n",
+        "                contagem_anos[ano] = 1\n",
+        "\n",
+        "    maior_quantidade = max(contagem_anos.values())\n",
+        "\n",
+        "    anos_com_mais_lancamentos = []\n",
+        "\n",
+        "    for ano in contagem_anos:\n",
+        "        if contagem_anos[ano] == maior_quantidade:\n",
+        "            anos_com_mais_lancamentos.append(ano)\n",
+        "\n",
+        "    return anos_com_mais_lancamentos\n",
+        "\n",
+        "anos = ano_com_mais_lancamentos(jogos)\n",
+        "\n",
+        "print(\"Ano(s) com maior número de lançamentos:\", anos)"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "2IZlPZZUhOxy",
+        "outputId": "0fde46af-dd77-47e8-878e-649318db636b"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Ano(s) com maior número de lançamentos: [2022]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#PERGUNTA 3 - ANO COM MAIOR MÉDIA DE PREÇO DOS JOGOS PAGOS\n",
+        "\n",
+        "def ano_maior_media_preco(jogos):\n",
+        "    soma_precos_ano = {}\n",
+        "    quantidade_ano = {}\n",
+        "\n",
+        "    for jogo in jogos:\n",
+        "        if jogo.price > 0:\n",
+        "            ano = extrair_ano(jogo.release_date)\n",
+        "\n",
+        "            if ano is not None:\n",
+        "                if ano in soma_precos_ano:\n",
+        "                    soma_precos_ano[ano] += jogo.price\n",
+        "                    quantidade_ano[ano] += 1\n",
+        "                else:\n",
+        "                    soma_precos_ano[ano] = jogo.price\n",
+        "                    quantidade_ano[ano] = 1\n",
+        "\n",
+        "    medias_ano = {}\n",
+        "\n",
+        "    for ano in soma_precos_ano:\n",
+        "        media = soma_precos_ano[ano] / quantidade_ano[ano]\n",
+        "        medias_ano[ano] = media\n",
+        "\n",
+        "    maior_ano = None\n",
+        "    maior_media = 0\n",
+        "\n",
+        "    for ano in medias_ano:\n",
+        "        if medias_ano[ano] > maior_media:\n",
+        "            maior_media = medias_ano[ano]\n",
+        "            maior_ano = ano\n",
+        "\n",
+        "    return maior_ano, maior_media\n",
+        "\n",
+        "ano, media = ano_maior_media_preco(jogos)\n",
+        "\n",
+        "print(\"Ano com maior média de preço dos jogos pagos:\", ano)\n",
+        "print(\"Média de preço:\", round(media, 2))\n"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "_q1CE49zIW3n",
+        "outputId": "55e7812e-d496-43c0-9068-bb0f87345105"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Ano com maior média de preço dos jogos pagos: 2002\n",
+            "Média de preço: 14.99\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#AMOSTRA COM 20 JOGOS\n",
+        "\n",
+        "import csv\n",
+        "import random\n",
+        "\n",
+        "def criar_amostra(nome_arquivo_original, nome_arquivo_amostra):\n",
+        "    random.seed(42)\n",
+        "    with open(nome_arquivo_original, \"r\", encoding=\"utf-8\") as arquivo:\n",
+        "        leitor = csv.DictReader(arquivo)\n",
+        "        linhas = list(leitor)\n",
+        "\n",
+        "    amostra = random.sample(linhas, 20)\n",
+        "\n",
+        "    with open(nome_arquivo_amostra, \"w\", encoding=\"utf-8\", newline=\"\") as arquivo_amostra:\n",
+        "        nomes_colunas = amostra[0].keys()\n",
+        "        escritor = csv.DictWriter(arquivo_amostra, fieldnames=nomes_colunas)\n",
+        "\n",
+        "        escritor.writeheader()\n",
+        "        escritor.writerows(amostra)\n"
+      ],
+      "metadata": {
+        "id": "Yrnis6VbNQVB"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "criar_amostra(\"steam_games.csv\", \"steam_sample.csv\")"
+      ],
+      "metadata": {
+        "id": "NM4tHE28OtPj"
+      },
+      "execution_count": 15,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "print(os.listdir())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "fk_4CguHO4jA",
+        "outputId": "8207a117-7e57-4f87-b1bb-eb19dd894d2a"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['.config', 'steam_sample.csv', 'steam_games.csv', 'sample_data']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "with open(\"steam_sample.csv\", \"r\", encoding=\"utf-8\") as arquivo:\n",
+        "    leitor = csv.DictReader(arquivo)\n",
+        "\n",
+        "    for i, linha in enumerate(leitor):\n",
+        "        print(\"Jogo\", i + 1)\n",
+        "        print(\"AppID:\", linha[\"AppID\"])\n",
+        "        print(\"Name:\", linha[\"Name\"])\n",
+        "        print(\"Release date:\", linha[\"Release date\"])\n",
+        "        print(\"Price:\", linha[\"Price\"])\n",
+        "        print(\"-\" * 40)"
+      ],
+      "metadata": {
+        "collapsed": true,
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "IexwVaH7PK6f",
+        "outputId": "5ee45136-51e4-4820-d465-2bee50d9d004"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Jogo 1\n",
+            "AppID: 1967950\n",
+            "Name: Moi Mei: Hidden Objects\n",
+            "Release date: May 18, 2022\n",
+            "Price: 9.99\n",
+            "----------------------------------------\n",
+            "Jogo 2\n",
+            "AppID: 812580\n",
+            "Name: Chop It\n",
+            "Release date: Sep 17, 2018\n",
+            "Price: 9.99\n",
+            "----------------------------------------\n",
+            "Jogo 3\n",
+            "AppID: 220700\n",
+            "Name: RPG Maker VX Ace\n",
+            "Release date: Dec 10, 2012\n",
+            "Price: 10.49\n",
+            "----------------------------------------\n",
+            "Jogo 4\n",
+            "AppID: 675010\n",
+            "Name: MudRunner\n",
+            "Release date: Oct 30, 2017\n",
+            "Price: 19.99\n",
+            "----------------------------------------\n",
+            "Jogo 5\n",
+            "AppID: 696460\n",
+            "Name: Pixel Traffic: Circle Rush\n",
+            "Release date: Aug 30, 2017\n",
+            "Price: 3.99\n",
+            "----------------------------------------\n",
+            "Jogo 6\n",
+            "AppID: 572010\n",
+            "Name: No Way Out\n",
+            "Release date: Oct 4, 2018\n",
+            "Price: 0.99\n",
+            "----------------------------------------\n",
+            "Jogo 7\n",
+            "AppID: 1473100\n",
+            "Name: Guess Colors\n",
+            "Release date: Dec 8, 2020\n",
+            "Price: 0.99\n",
+            "----------------------------------------\n",
+            "Jogo 8\n",
+            "AppID: 1139490\n",
+            "Name: Summer Daze: Tilly's Tale\n",
+            "Release date: Mar 28, 2023\n",
+            "Price: 17.99\n",
+            "----------------------------------------\n",
+            "Jogo 9\n",
+            "AppID: 1202860\n",
+            "Name: Sterio\n",
+            "Release date: Dec 13, 2019\n",
+            "Price: 9.99\n",
+            "----------------------------------------\n",
+            "Jogo 10\n",
+            "AppID: 1366930\n",
+            "Name: Rainbow Laser Disco Dungeon\n",
+            "Release date: Sep 27, 2021\n",
+            "Price: 9.99\n",
+            "----------------------------------------\n",
+            "Jogo 11\n",
+            "AppID: 1841580\n",
+            "Name: Child vs Clowns\n",
+            "Release date: Jan 15, 2022\n",
+            "Price: 4.99\n",
+            "----------------------------------------\n",
+            "Jogo 12\n",
+            "AppID: 576130\n",
+            "Name: State of Anarchy: Master of Mayhem\n",
+            "Release date: Mar 31, 2017\n",
+            "Price: 2.99\n",
+            "----------------------------------------\n",
+            "Jogo 13\n",
+            "AppID: 814770\n",
+            "Name: Duder\n",
+            "Release date: Mar 13, 2018\n",
+            "Price: 19.99\n",
+            "----------------------------------------\n",
+            "Jogo 14\n",
+            "AppID: 981790\n",
+            "Name: Halloween Girl\n",
+            "Release date: Nov 26, 2018\n",
+            "Price: 0.99\n",
+            "----------------------------------------\n",
+            "Jogo 15\n",
+            "AppID: 925700\n",
+            "Name: Evening Star\n",
+            "Release date: Sep 13, 2018\n",
+            "Price: 2.99\n",
+            "----------------------------------------\n",
+            "Jogo 16\n",
+            "AppID: 2147260\n",
+            "Name: Extermination Cars Stadium\n",
+            "Release date: Nov 13, 2022\n",
+            "Price: 4.99\n",
+            "----------------------------------------\n",
+            "Jogo 17\n",
+            "AppID: 1815170\n",
+            "Name: Asteroides\n",
+            "Release date: Jan 11, 2022\n",
+            "Price: 0.0\n",
+            "----------------------------------------\n",
+            "Jogo 18\n",
+            "AppID: 1477660\n",
+            "Name: VR Atlantis Search: with Deep Diving\n",
+            "Release date: Dec 1, 2020\n",
+            "Price: 6.99\n",
+            "----------------------------------------\n",
+            "Jogo 19\n",
+            "AppID: 2357130\n",
+            "Name: Mars Colonization\n",
+            "Release date: Mar 31, 2023\n",
+            "Price: 2.39\n",
+            "----------------------------------------\n",
+            "Jogo 20\n",
+            "AppID: 1045010\n",
+            "Name: Russia Roguelike\n",
+            "Release date: Jun 17, 2020\n",
+            "Price: 0.99\n",
+            "----------------------------------------\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "jogos_amostra = carregar_jogos(\"steam_sample.csv\")\n",
+        "\n",
+        "print(\"Quantidade de jogos na amostra:\", len(jogos_amostra))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "F3AH7VXnPcv8",
+        "outputId": "ea69a315-3414-4e26-dfb3-e72f8b0c7fee"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Quantidade de jogos na amostra: 20\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#PERGUNTA 1 - amostra\n",
+        "\n",
+        "percentual_gratuitos_amostra, percentual_pagos_amostra = calcular_percentual_gratuitos_pagos(jogos_amostra)\n",
+        "\n",
+        "print(\"Percentual de jogos gratuitos na amostra:\", round(percentual_gratuitos_amostra, 2), \"%\")\n",
+        "print(\"Percentual de jogos pagos na amostra:\", round(percentual_pagos_amostra, 2), \"%\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "b-X-jtqCP4XW",
+        "outputId": "f1d5297e-c081-42b4-ad2a-b015062c8fd9"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Percentual de jogos gratuitos na amostra: 5.0 %\n",
+            "Percentual de jogos pagos na amostra: 95.0 %\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#PERGUNTA 2 - amostra\n",
+        "\n",
+        "anos_amostra = ano_com_mais_lancamentos(jogos_amostra)\n",
+        "\n",
+        "print(\"Ano(s) com mais lançamentos na amostra:\", anos_amostra)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Apfvy7HCP-_k",
+        "outputId": "bb93ae09-e6ac-4691-97e6-a43d6cdc698b"
+      },
+      "execution_count": 21,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Ano(s) com mais lançamentos na amostra: [2018]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#PERGUNTA 3 - amostra\n",
+        "\n",
+        "ano_maior_media_amostra, media_maior_preco_amostra = ano_maior_media_preco(jogos_amostra)\n",
+        "\n",
+        "print(\"Ano com maior média de preço dos jogos pagos na amostra:\", ano_maior_media_amostra)\n",
+        "print(\"Média de preço na amostra:\", round(media_maior_preco_amostra, 2))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "uz_oV1XyQtnK",
+        "outputId": "c8b2a35c-544a-4ac9-e826-0fc93edc02f7"
+      },
+      "execution_count": 22,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Ano com maior média de preço dos jogos pagos na amostra: 2012\n",
+            "Média de preço na amostra: 10.49\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#TESTES\n",
+        "\n",
+        "def teste_pergunta1_amostra():\n",
+        "    \"\"\"\n",
+        "    Testa a pergunta 1 usando a amostra.\n",
+        "\n",
+        "    >>> teste_pergunta1_amostra()\n",
+        "    (5.0, 95.0)\n",
+        "    \"\"\"\n",
+        "    jogos_amostra = carregar_jogos(\"steam_sample.csv\")\n",
+        "    percentual_gratuitos, percentual_pagos = calcular_percentual_gratuitos_pagos(jogos_amostra)\n",
+        "    return round(percentual_gratuitos, 2), round(percentual_pagos, 2)\n",
+        "\n",
+        "\n",
+        "def teste_pergunta2_amostra():\n",
+        "    \"\"\"\n",
+        "    Testa a pergunta 2 usando a amostra.\n",
+        "\n",
+        "    >>> teste_pergunta2_amostra()\n",
+        "    [2018]\n",
+        "    \"\"\"\n",
+        "    jogos_amostra = carregar_jogos(\"steam_sample.csv\")\n",
+        "    return ano_com_mais_lancamentos(jogos_amostra)"
+      ],
+      "metadata": {
+        "id": "Ctuk-stPWWcJ"
+      },
+      "execution_count": 23,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import doctest\n",
+        "\n",
+        "resultado_testes = doctest.testmod()\n",
+        "print(resultado_testes)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "fx1-f_NcZwVI",
+        "outputId": "2e3dc4b5-acd3-4d09-d9de-c71473eafa7f"
+      },
+      "execution_count": 24,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "TestResults(failed=0, attempted=2)\n"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "name": "Welcome To Colab",
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
